@@ -1,0 +1,55 @@
+@startuml
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+skinparam linetype polyline
+skinparam componentStyle rectangle
+header
+Component diagram embedded in IT infrastructure – Task **F1T002**
+(Fetching F1 race results from API)
+endheader
+footer Author: kalinpi
+allowmixing
+
+node "Oracle Linux" as Linux {
+  component Robot [
+    F1T002@prep
+    <<API>>
+    ====
+    Description: Fetching classification and tyre strategy from OpenF1 API
+    Details:
+    [[file://./1_task_prep_Component_Diagram.plantuml]]
+  ]
+}
+
+node "Network resource (cifs)" as cifs {
+  folder dict_folder as "/dicts" {
+    file DICT <<GP_DICT.xlsx>>
+  }
+  folder in_folder as "/in" {
+    file RACES <<RACES.xlsx>>
+  }
+  folder out_folder as "/out" {
+    file RACES_out <<RACES_out.xlsx>>
+  }
+}
+
+node "External API (URL)" as API_NODE #FFCCCC {
+  component API [
+    OpenF1 API
+    ====
+    https://api.openf1.org/v1
+  ]
+}
+
+Robot -d-> DICT      : 1. \nLoad GP name\ndictionary
+Robot -d-> RACES     : 2. \nLoad race list
+Robot -l-> API       : 3. \nFetch results\nand tyre strategies
+Robot -u-> RACES_out : 4. \nSave result\nor error reason
+
+legend bottom left
+  |= Color / Icon |= Meaning |
+  |<#FFCCCC>| External infrastructure |
+  |<#FFFFFF>| Internal infrastructure |
+  |cifs| Network folder available to RPA |
+endlegend
+@enduml

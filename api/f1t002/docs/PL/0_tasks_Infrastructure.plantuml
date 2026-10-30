@@ -1,0 +1,55 @@
+@startuml
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+skinparam linetype polyline
+skinparam componentStyle rectangle
+header
+Diagram komponentów osadzonych w infrastrukturze IT – Zadanie **F1T002**
+(Pobieranie wyników wyścigów F1 z API)
+endheader
+footer Author: kalinpi
+allowmixing
+
+node "Oracle Linux" as Linux {
+  component Robot [
+    F1T002@prep
+    <<API>>
+    ====
+    Opis: Pobieranie klasyfikacji i strategii opon z OpenF1 API
+    Szczegóły:
+    [[file://./1_task_prep_Component_Diagram.plantuml]]
+  ]
+}
+
+node "Zasób sieciowy (cifs)" as cifs {
+  folder dict_folder as "/dicts" {
+    file DICT <<GP_DICT.xlsx>>
+  }
+  folder in_folder as "/in" {
+    file RACES <<RACES.xlsx>>
+  }
+  folder out_folder as "/out" {
+    file RACES_out <<RACES_out.xlsx>>
+  }
+}
+
+node "Zewnętrzne API (URL)" as API_NODE #FFCCCC {
+  component API [
+    OpenF1 API
+    ====
+    https://api.openf1.org/v1
+  ]
+}
+
+Robot -d-> DICT      : 1. \nWczytaj słownik\nnazw GP
+Robot -d-> RACES     : 2. \nWczytaj listę\nwyścigów
+Robot -l-> API       : 3. \nPobierz wyniki\ni strategie opon
+Robot -u-> RACES_out : 4. \nZapisz wynik\nlub powód błędu
+
+legend bottom left
+  |= Kolor / Ikona |= Znaczenie |
+  |<#FFCCCC>| Zewnętrzna infrastruktura |
+  |<#FFFFFF>| Wewnętrzna infrastruktura |
+  |cifs| Folder sieciowy dostępny dla RPA |
+endlegend
+@enduml

@@ -1,0 +1,3 @@
+#Definicja Crona do uruchamiania robota
+#CRONDIR=/home/xxx_wth/WTH002
+#1 6 * * * cd $CRONDIR && ./WTH002.sh prep  #Codziennie o 6:01
