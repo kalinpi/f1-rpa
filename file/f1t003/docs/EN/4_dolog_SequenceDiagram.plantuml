@@ -1,0 +1,64 @@
+@startuml Sequence Diagram of dolog.py
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+header 
+ Sequence diagram of dolog work responsible for collecting logs from json files to Excel file
+endheader
+footer Author: kamil.mieczkowski@poczta-polska.pl
+
+title dolog.py version 1.2.0
+
+os-> dolog
+note right #Grey
+- Passing YYYY MM parameters
+end note
+
+dolog -> "./translations"
+note right #Grey
+Setting translations
+end note
+
+group#Gray Running main()
+
+dolog --> dolog : verify year, month parameters
+note right
+Setting the processing year and month
+for .json files from the .\log directory
+end note
+
+dolog --> dolog : verify log_folder, workbook_path parameters
+note right
+    Setting directory and file name -logs.xlsx
+    end note
+
+
+    group#Gray process_logs() :Processing .json files from the .log directory
+
+        dolog --> dolog : Fetching .json files in the ./log directory
+
+        group#Gray Data rewriting
+            dolog --> dolog : Build list of files with YYYY-MM*.json
+            dolog -> "{robot}-logs.xlsx" : Create/open Excel file
+            dolog -> "{robot}-logs.xlsx" : Create/open Sheet named YYYY-MM
+            dolog -> "log_files[]" : Fetch first file
+            group#Gray If needed 
+                dolog -> "{robot}-logs.xlsx" : Fill headers in Excel with keys from YYYY-MM*.json
+            end
+            dolog --> dolog : Determine start_row in "{robot}-logs.xlsx"
+
+            loop over all log_files[]
+                dolog --> dolog : Set **log_path**
+                dolog -> "log_files[]" : Fetch next file as json into **data**
+                dolog -> "{robot}-logs.xlsx" : Rewrite from **data** to Sheet into **start_row**
+                dolog --> dolog : Update **start_row**
+                dolog -> "{robot}-logs.xlsx" : Save data in Excel file
+                dolog -> "log_files[]" : Delete processed .json file specified in **log_path**
+            end
+
+        end
+
+    end
+end
+
+@enduml
+

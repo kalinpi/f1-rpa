@@ -1,0 +1,59 @@
+@startuml
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+header
+Diagram komponentów opisujący szczegółowy zakres zadania F1T003
+(przekształcanych danych) – tryb FILE
+endheader
+footer Author: kalinpi
+allowmixing
+skinparam linetype polyline
+
+component Robot [
+@task prep
+====
+
+====
+<<list>> race_sheets
+]
+
+folder "testcifs/in" {
+  file RIN <<*RACES*.xlsx>> [
+  | Zakładka "{rok} {miejsce}"\kolumna: | wynik wyścigu (z F1T001 / F1T002) |
+  | A | Poz |
+  | B | Nr |
+  | C | Kierowca |
+  | D | Zespół |
+  | E | Gap do lidera / DNF / DNS / DSQ |
+  | F | Opony (np. MH) |
+  | G | Okrążenia na stintach |
+  ]
+}
+
+folder "testcifs/out" {
+  file ROUT <<*RACES*.xlsx>> [
+  | Zakładka "Statystyki"\kolumna: | RACES_out |
+  | A | <#00AA00>Wyścig <-- wyliczono |
+  | B | <#00AA00>Zwycięzca <-- wyliczono |
+  | C | <#00AA00>Zespół zwycięzcy <-- wyliczono |
+  | D | <#00AA00>Sklasyfikowani <-- wyliczono |
+  | E | <#00AA00>DNF/DNS/DSQ <-- wyliczono |
+  | F | <#00AA00>Śr. liczba pit stopów <-- wyliczono |
+  | G | <#00AA00>Najczęstsza strategia opon <-- wyliczono |
+  | H | <#00AA00>status: OK / opis_bledu <-- jeśli błąd |
+  ====
+  | Podsumowanie | <#00AA00>liczba wyścigów, strategia, pit stopy, DNF, najlepszy zespół (punkty), najwięcej zwycięstw |
+  ]
+}
+
+Robot -d-> "testcifs/in" : 1. \nWczytaj zakładki\nz wynikami wyścigów
+Robot -r-> ROUT          : 2a. \nPrzenieś z\ndatą wykonania
+Robot .r.> ROUT          : 2b. \nPrzenieś z\nbłędem jako\nERROR_RACES.xlsx
+
+legend bottom left
+  |= Kolor / Ikona |= Znaczenie |
+  |testcifs| Folder sieciowy dostępny przez RPA i użytkownika |
+  | →   | Wywołuje przepływ procesu |
+  | - ->| Przepływ warunkowy (w przypadku błędu)  |
+endlegend
+@enduml

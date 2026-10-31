@@ -1,0 +1,59 @@
+@startuml
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+header
+Component diagram describing the detailed scope of task F1T003
+(data transformation) – FILE mode
+endheader
+footer Author: kalinpi
+allowmixing
+skinparam linetype polyline
+
+component Robot [
+@task prep
+====
+
+====
+<<list>> race_sheets
+]
+
+folder "testcifs/in" {
+  file RIN <<*RACES*.xlsx>> [
+  | Sheet "{year} {location}"\column: | race result (from F1T001 / F1T002) |
+  | A | Pos |
+  | B | No |
+  | C | Driver |
+  | D | Team |
+  | E | Gap to leader / DNF / DNS / DSQ |
+  | F | Tyres (e.g. MH) |
+  | G | Laps per stint |
+  ]
+}
+
+folder "testcifs/out" {
+  file ROUT <<*RACES*.xlsx>> [
+  | Sheet "Statistics"\column: | RACES_out |
+  | A | <#00AA00>Race <-- computed |
+  | B | <#00AA00>Winner <-- computed |
+  | C | <#00AA00>Winner team <-- computed |
+  | D | <#00AA00>Classified <-- computed |
+  | E | <#00AA00>DNF/DNS/DSQ <-- computed |
+  | F | <#00AA00>Avg pit stops <-- computed |
+  | G | <#00AA00>Most common tyre strategy <-- computed |
+  | H | <#00AA00>status: OK / error_description <-- if error |
+  ====
+  | Summary | <#00AA00>number of races, strategy, pit stops, DNF, best team (points), most wins |
+  ]
+}
+
+Robot -d-> "testcifs/in" : 1. \nLoad race\nresult sheets
+Robot -r-> ROUT          : 2a. \nMove with\nexecution date
+Robot .r.> ROUT          : 2b. \nMove with\nerror as\nERROR_RACES.xlsx
+
+legend bottom left
+  |= Color / Icon |= Meaning |
+  |testcifs| Network folder available by RPA and user |
+  | →   | Invokes process flow |
+  | - ->| Conditional flow (in case of error)  |
+endlegend
+@enduml

@@ -1,0 +1,42 @@
+@startuml
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+skinparam linetype polyline
+skinparam componentStyle rectangle
+header
+Diagram komponentów osadzonych w infrastrukturze IT – Zadanie **F1T003**
+(Statystyki wyścigów F1 z pliku – tryb FILE)
+endheader
+footer Author: kalinpi
+allowmixing
+
+node "Oracle Linux" as Linux {
+  component Robot [
+    F1T003@prep
+    <<FILE>>
+    ====
+    Opis: Liczenie statystyk z pliku wynikowego F1T001 / F1T002
+    Szczegóły:
+    [[file://./1_task_prep_Component_Diagram.plantuml]]
+  ]
+}
+
+node "Zasób sieciowy (cifs)" as cifs {
+  folder in_folder as "/in" {
+    file RIN <<RACES.xlsx>>
+    }
+  folder out_folder as "/out" {
+    file ROUT <<RACES_out.xlsx>>
+    }
+}
+
+Robot -d-> RIN  : 1. \nWczytaj zakładki\nz wynikami wyścigów
+Robot -u-> ROUT : 2. \nZapisz wynik\n+ Statystyki
+
+legend bottom left
+  |= Kolor / Ikona |= Znaczenie |
+  |<#FFCCCC>| Zewnętrzna infrastruktura |
+  |<#FFFFFF>| Wewnętrzna Infrastruktura  |
+  |cifs| Folder sieciowy dostępny dla RPA|
+endlegend
+@enduml

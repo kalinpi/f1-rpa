@@ -1,0 +1,75 @@
+pl:
+  err_incorrect_mode: "Niepoprawny tryb, poprawne tryby: PROD, TEST"
+  err_incorrect_type: "Niepoprawny typ, poprawne typy: WWW, API, FIL "
+  err_apikey: "Nie poprawny apikey"
+  step_0: "STEP 0 - Start - %n"
+  step_1: "STEP 1 - Zalogowano"
+  step_2: "STEP 2 - Przygotowano"
+  step_3: "STEP 3 - Przetworzono"
+  step_5: "STEP 5 - Zakończona - %n"
+  file_in_miss: "Brak pliku wejściowego z danymi lub wszystkie zostały przetworzone."
+  file_progress: "Postęp pliku  : %n"
+  file_error: "Brak pliku wejściowego, pobranie następnego pliku."
+  login_pass_miss: "Brak danych login lub  hasło w .envs"
+  login_error: "Nie poprawny login/hasło w .envs"
+  bad_file: "Plik z niepoprawnymi danymi"
+  folder_not_exist: Folder %n nie istnieje
+  date_format : "Niepoprawny format daty"
+  date_not_found: "Nie znaleziono daty w nazwie pliku: %n (plik będzie przetworzy jeden raz) "
+  err_xls_conversion: Konwersja pliku *.xls* przez LiberOffice nie powiodła się %n
+  batch_pdf_conversion_error: "Błąd konwersji PDF: %e"
+  unexpected_error: "Nieoczekiwany błąd: %e"
+  dryrun_enabled: "Tryb DRYRUN włączony"
+
+### errory do skryptu do zliczania logów
+  err_filenotfound: Nie znaleziono logów dla %n
+  err_data: Plik %n nie zawiera danych w formacie słownika.
+  err_decode: Błąd dekodowania JSON w pliku %n
+  err_format: Nieobsługiwany format danych w pliku %n
+  save: Dane zapisano w %n
+  delete: Plik %n został usunięty
+  use_script: Użycie w konsoli - python skrypt.py <rok> <miesiąc>
+
+### dolog
+  log_sheet_sum_name: "Razem"
+  log_sheet_month_sum: "Miesiąc/Razem"
+  log_header_total: "Razem"
+  log_header_hours_saved: "Godzin oszczędzonych"
+  log_header_md_saved: "MD oszczędzonych"
+  log_header_robot_work_time: "Czas pracy robota"
+  log_header_status_ok_percent: "% statusów OK"
+
+### API
+  api_connection_success: "Połączenie z API zakończone sukcesem"
+  api_connection_failed: "Błąd połączenia z API, kod statusu: "
+  err_api_request: "Błąd żądania API: "
+  api_connection_check: "Sprawdzenie podłączenia do API ..."
+  api_error: "Błąd API : %item_id status  %status_code"
+
+### FILE
+  file_name: "========== Przetwarzenie pliku: %file_name =========="
+  file_sheet: "---------- Przetwarzenie zakładki: %sheet_name ----------"
+  file_name_completed: "========== Plik:  %file_name zakończony: %desc =========="
+
+### F1
+  stats_sheet: "Statystyki"
+  race_sheet: "Zakładka: %n"
+  race_ok: "OK"
+  err_no_races: "Brak zakładek z wynikami wyścigów"
+  err_race_sheet: "Niepoprawny format zakładki (oczekiwane kolumny: Poz, Nr, Kierowca, Zespół, Gap, Opony, Stinty)"
+  err_race_empty: "Brak wyników w zakładce"
+  col_race: "Wyścig"
+  col_winner: "Zwycięzca"
+  col_winner_team: "Zespół zwycięzcy"
+  col_classified: "Sklasyfikowani"
+  col_dnf: "DNF/DNS/DSQ"
+  col_avg_pits: "Śr. liczba pit stopów"
+  col_strategy: "Najczęstsza strategia opon"
+  col_status: "status"
+  sum_title: "Podsumowanie"
+  sum_races: "Liczba wyścigów"
+  sum_strategy: "Najczęstsza strategia opon"
+  sum_avg_pits: "Śr. liczba pit stopów"
+  sum_dnf: "Suma DNF/DNS/DSQ"
+  sum_best_team: "Najlepszy zespół (punkty)"
+  sum_most_wins: "Najwięcej zwycięstw"

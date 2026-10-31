@@ -1,0 +1,42 @@
+@startuml
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+skinparam linetype polyline
+skinparam componentStyle rectangle
+header
+Component diagram embedded in IT infrastructure – Task **F1T003**
+(F1 race statistics from a file – FILE mode)
+endheader
+footer Author: kalinpi
+allowmixing
+
+node "Oracle Linux" as Linux {
+  component Robot [
+    F1T003@prep
+    <<FILE>>
+    ====
+    Description: Computing statistics from the F1T001 / F1T002 output file
+    Details:
+    [[file://./1_task_prep_Component_Diagram.plantuml]]
+  ]
+}
+
+node "Network resource (cifs)" as cifs {
+  folder in_folder as "/in" {
+    file RIN <<RACES.xlsx>>
+    }
+  folder out_folder as "/out" {
+    file ROUT <<RACES_out.xlsx>>
+    }
+}
+
+Robot -d-> RIN  : 1. \nLoad race\nresult sheets
+Robot -u-> ROUT : 2. \nSave result\n+ Statistics
+
+legend bottom left
+  |= Color / Icon |= Meaning |
+  |<#FFCCCC>| External infrastructure |
+  |<#FFFFFF>| Internal infrastructure  |
+  |cifs| Network folder available to RPA|
+endlegend
+@enduml

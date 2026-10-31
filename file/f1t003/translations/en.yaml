@@ -1,0 +1,75 @@
+en:
+  err_incorrect_mode: "Incorrect mode, correct modes : PROD, TEST"
+  err_incorrect_type: "Incorrect type, correct types: WWW, API, FIL "
+  err_apikey: "Wrong apikey"
+  step_0: "STEP 0 - Start - %n"
+  step_1: "STEP 1 - Logged in"
+  step_2: "STEP 2 - prepared"
+  step_3: "STEP 3 - processed"
+  step_5: "STEP 5 - Stop - %n"
+  file_in_miss: "No input data file or all were processed."
+  file_progress: "Progres of file : %n"
+  file_error: "No input file, getting another file."
+  login_pass_miss: "No login or password in .envs"
+  login_error: "Wrong login or password in .envs"
+  bad_file: "File with incorrect data"
+  folder_not_exist: Folder %n does not exist
+  date_format: "Incorrect date format"
+  date_not_found: "No date format in name of filename: %n (file will be check one time) "
+  err_xls_conversion: LiberOffice failed to convert *.xls* file %n
+  batch_pdf_conversion_error: "PDF conversion error: %e"
+  unexpected_error: "Unexpected error: %e"
+  dryrun_enabled: "DRYRUN mode enabled"
+
+### Errors for log counting script
+  err_filenotfound: No logs found for %n
+  err_data: File %n does not contain data in dictionary format.
+  err_decode: JSON decoding error in file %n
+  err_format: Unsupported data format in file %n
+  save: Data saved in %n
+  delete: File %n has been deleted
+  use_script: Console usage - python script.py <year> <month>
+
+### dolog
+  log_sheet_sum_name: "Sum"
+  log_sheet_month_sum: "Month/Sum"
+  log_header_total: "Total"
+  log_header_hours_saved: "Hours saved"
+  log_header_md_saved: "MD saved"
+  log_header_robot_work_time: "Robot working time"
+  log_header_status_ok_percent: "% statuses OK"
+
+### API
+  api_connection_success: "API connection successful"
+  api_connection_failed: "Error connecting to API, status code: "
+  err_api_request: "Error making API request: "
+  api_connection_check: "Checking API connection..."
+  api_error: "API error content: %item_id status %status_code"
+
+### FILE
+  file_name: "==========  Processing file: %file_name  =========="
+  file_sheet: "---------- Processing sheet: %sheet_name ----------"
+  file_name_completed: "========== File:  %file_name completed: %desc =========="
+
+### F1
+  stats_sheet: "Statistics"
+  race_sheet: "Sheet: %n"
+  race_ok: "OK"
+  err_no_races: "No race result sheets"
+  err_race_sheet: "Incorrect sheet format (expected columns: Pos, No, Driver, Team, Gap, Tyres, Stints)"
+  err_race_empty: "No results in the sheet"
+  col_race: "Race"
+  col_winner: "Winner"
+  col_winner_team: "Winner team"
+  col_classified: "Classified"
+  col_dnf: "DNF/DNS/DSQ"
+  col_avg_pits: "Avg pit stops"
+  col_strategy: "Most common tyre strategy"
+  col_status: "status"
+  sum_title: "Summary"
+  sum_races: "Number of races"
+  sum_strategy: "Most common tyre strategy"
+  sum_avg_pits: "Avg pit stops"
+  sum_dnf: "Total DNF/DNS/DSQ"
+  sum_best_team: "Best team (points)"
+  sum_most_wins: "Most wins"
