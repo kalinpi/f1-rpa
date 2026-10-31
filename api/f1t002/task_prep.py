@@ -133,7 +133,7 @@ def do_logic(RACES_files, source_folder, destination_folder, dict_folder, log_fo
             ut.move_file(source_folder, destination_folder, RACES_filename)
 
         utLOG.end_sucess_to_log()  # close last JSON_LOG
-        cfg.JSON_LOG_PATH = f'{log_folder}{cfg.MODE}{cfg.TYPE}_{datetime.now().strftime("_%Y-%m-%d_%H-%M-%S")}_log.json'  # Create new JSON_LOG
+        cfg.JSON_LOG_PATH = f'{log_folder}{cfg.MODE}{cfg.TYPE}_{datetime.now().strftime("_%Y-%m-%d_%H-%M-%S_%f")}_log.json'  # Create new JSON_LOG (microseconds: a fast run must not overwrite the closed log)
         utLOG.start_log()  # start new  JSON_LOG
 
 

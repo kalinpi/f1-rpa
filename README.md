@@ -12,8 +12,8 @@ The robot fetches the results and saves an Excel file with the classification, t
 | Robot | Type | Description | Status |
 |---|---|---|---|
 | [F1T001](www/f1t001/) | WWW | Race results scraped from a website (Playwright) | ⏳ planned |
-| [F1T002](api/f1t002/) | API | Race results and tyre strategies from [OpenF1 API](https://openf1.org) | 🔄 in progress |
-| [F1T003](file/f1t003/) | FILE | Season statistics computed offline from the F1T001 / F1T002 output (most common tyre strategy, DNF count, best team…) | ⏳ planned |
+| [F1T002](api/f1t002/README.md) | API | Race results and tyre strategies from [OpenF1 API](https://openf1.org) (2023+) | ✅ ready (local tests) |
+| [F1T003](file/f1t003/README.md) | FILE | Statistics computed offline from the F1T001 / F1T002 output (most common tyre strategy, pit stops, DNF count, best team…) | ✅ ready (local tests) |
 
 Naming: `F1T` = topic (F1) + robot number. `001` WWW, `002` API, `003` FILE – same as in the Poczta repo.
 
@@ -21,7 +21,7 @@ Naming: `F1T` = topic (F1) + robot number. `001` WWW, `002` API, `003` FILE – 
 
 1. A user puts `*RACES*.xlsx` into `in/` (column A – year, column B – GP name, circuit or country in any form, e.g. `baku`, `Monaco`, `cota`).
 2. The robot (task `prep`) translates the name using the shared dictionary `dicts/GP_DICT.xlsx` and finds the race.
-3. For every race it adds a new sheet (e.g. `2025 Azerbaijan`): position, number, driver, team, gap to leader / DNF, tyres (e.g. `SHS`) and laps per stint (e.g. `13/42/10`).
+3. For every race it adds a new sheet (e.g. `2025 Baku`): position, number, driver, team, gap to leader / DNF, tyres (e.g. `SHS`) and laps per stint (e.g. `13/42/10`).
 4. The status of each row (OK or error in red) is written next to the input data.
 5. The file is moved to `out/` with the execution date, or with the `ERROR_` prefix if anything failed.
 6. Every run leaves a `.json` log; task `Dolog` collects them into an Excel sheet with work statistics (1 processed row = 1 minute saved).
