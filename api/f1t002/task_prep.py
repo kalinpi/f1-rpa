@@ -63,7 +63,7 @@ def choose():
     utLOG.stage_to_log(2)  # Mark Prepare at end
 
 
-def do_logic(WEATHER_files, source_folder, destination_folder, log_folder):
+def do_logic(WEATHER_files, source_folder, destination_folder, dict_folder, log_folder):
     """Do logic
     - reads cities from _files
     - executes logic in 'search_and_mark'

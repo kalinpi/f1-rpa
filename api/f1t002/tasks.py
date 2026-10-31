@@ -10,6 +10,7 @@ from task_dolog import process_logs
 
 source_folder = './in/'
 destination_folder = './out/'
+dict_folder = './dicts/'
 log_folder = './log/'
 files = []
 cfg.set_translation()
@@ -27,10 +28,11 @@ def prep():
     - when the configuration is incorrect or there is no access to folders.
     """
     if len(cfg.SHARED) >0:
-        global source_folder, destination_folder
+        global source_folder, destination_folder, dict_folder
         source_folder = source_folder.replace("./", cfg.SDIR+"/" )
         destination_folder = destination_folder.replace("./", cfg.SDIR+"/" )
-        if not (ut.connect_to_folder(source_folder) and ut.connect_to_folder(destination_folder)):
+        dict_folder = dict_folder.replace("./", cfg.SDIR+"/" )
+        if not (ut.connect_to_folder(source_folder) and ut.connect_to_folder(destination_folder) and ut.connect_to_folder(dict_folder)):
             exit(1)
 
     """SET log to json"""
@@ -62,7 +64,7 @@ def prep():
         exit(0)
 
     EXT.choose()
-    EXT.do_logic(files,source_folder,destination_folder,log_folder)
+    EXT.do_logic(files,source_folder,destination_folder,dict_folder,log_folder)
 
     # Extention code stop
 
