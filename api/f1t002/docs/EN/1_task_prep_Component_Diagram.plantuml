@@ -1,0 +1,109 @@
+@startuml
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+header
+Component diagram describing the detailed scope of task F1T002
+(data transformation) – API mode
+endheader
+footer Author: kalinpi
+allowmixing
+skinparam linetype polyline
+
+component Robot [
+@task prep
+====
+
+====
+<<enum>> dict_GP
+<<enum>> dict_RACES
+]
+
+folder "testcifs/dicts" {
+  file GPDICT <<GP_DICT.xlsx>> [
+  | column: | dict_GP |
+  | A | alias (e.g. baku, monako, cota) |
+  | B | canonical name (e.g. Azerbaijan) |
+  ]
+}
+
+folder "testcifs/in" {
+  file RACES <<*RACES.xlsx>> [
+  | column: | dict_RACES |
+  | A | year |
+  | B | GP name / circuit / country |
+  ]
+}
+
+folder "testcifs/out" {
+  file ROUT <<*RACES_out.xlsx>> [
+  | Sheet 1\column: | RACES_out |
+  | A | year |
+  | B | GP name / circuit / country |
+  | C | <#00AA00>status: OK <-- update |
+  | C | <#00AA00>error_description (red) <-- if error |
+  ====
+  | Sheet "{year} {country}"\column: | race result |
+  | A | <#00AA00>Pos <-- update |
+  | B | <#00AA00>No <-- update |
+  | C | <#00AA00>Driver <-- update |
+  | D | <#00AA00>Team <-- update |
+  | E | <#00AA00>Gap to leader / DNF / DNS / DSQ <-- update |
+  | F | <#00AA00>Tyres (e.g. SHS) <-- update |
+  | G | <#00AA00>Laps per stint (e.g. 13/42/10) <-- update |
+  ]
+}
+
+component "OpenF1 API" as API {
+  component SESSIONS [
+  GET /v1/sessions
+  ====
+  api.openf1.org
+  ====
+  |Param| year={year}&session_name=Race|
+  |Response| session_key, country_name,|
+  |         | location, circuit_short_name|
+  ]
+  component RESULT [
+  GET /v1/session_result
+  ====
+  |Param| session_key={session_key}|
+  |Response| position, driver_number,|
+  |         | gap_to_leader, dnf, dns, dsq|
+  ]
+  component DRIVERS [
+  GET /v1/drivers
+  ====
+  |Param| session_key={session_key}|
+  |Response| driver_number, full_name,|
+  |         | team_name|
+  ]
+  component STINTS [
+  GET /v1/stints
+  ====
+  |Param| session_key={session_key}|
+  |Response| driver_number, stint_number,|
+  |         | compound, lap_start, lap_end|
+  ]
+}
+
+' hidden arrows – only keep endpoints ordered 3-6 from the left
+SESSIONS -[hidden]r-> RESULT
+RESULT   -[hidden]r-> DRIVERS
+DRIVERS  -[hidden]r-> STINTS
+
+Robot -d-> GPDICT        : 1. \nLoad GP\nalias dictionary
+Robot -d-> RACES         : 2. \nLoad list of races
+Robot -u-> SESSIONS      : 3. \nFind the race\n(year + GP from dictionary)
+Robot -u-> RESULT        : 4. \nFetch classification
+Robot -u-> DRIVERS       : 5. \nFetch drivers\nand teams
+Robot -u-> STINTS        : 6. \nFetch tyre strategies
+Robot -r-> ROUT          : 7a. \nMove with\nexecution date
+Robot .r.> ROUT          : 7b. \nMove with\nerror as\nERROR_RACES.xlsx
+
+legend bottom left
+  |= Color / Icon |= Meaning |
+  |testcifs| Network folder available by RPA and user |
+  | →   | Invokes process flow |
+  | - ->| Conditional flow (in case of error)  |
+endlegend
+@enduml

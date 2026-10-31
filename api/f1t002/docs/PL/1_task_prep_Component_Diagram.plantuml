@@ -1,0 +1,109 @@
+@startuml
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+header
+Diagram komponentów opisujący szczegółowy zakres zadania F1T002
+(przekształcanych danych) – tryb API
+endheader
+footer Author: kalinpi
+allowmixing
+skinparam linetype polyline
+
+component Robot [
+@task prep
+====
+
+====
+<<enum>> dict_GP
+<<enum>> dict_RACES
+]
+
+folder "testcifs/dicts" {
+  file GPDICT <<GP_DICT.xlsx>> [
+  | kolumna: | dict_GP |
+  | A | alias (np. baku, monako, cota) |
+  | B | nazwa kanoniczna (np. Azerbaijan) |
+  ]
+}
+
+folder "testcifs/in" {
+  file RACES <<*RACES.xlsx>> [
+  | kolumna: | dict_RACES |
+  | A | rok |
+  | B | nazwa GP / tor / kraj |
+  ]
+}
+
+folder "testcifs/out" {
+  file ROUT <<*RACES_out.xlsx>> [
+  | Zakładka 1\kolumna: | RACES_out |
+  | A | rok |
+  | B | nazwa GP / tor / kraj |
+  | C | <#00AA00>status: OK <-- aktualizacja |
+  | C | <#00AA00>opis_bledu (czerwony) <-- jeśli błąd |
+  ====
+  | Zakładka "{rok} {kraj}"\kolumna: | wynik wyścigu |
+  | A | <#00AA00>Poz <-- aktualizacja |
+  | B | <#00AA00>Nr <-- aktualizacja |
+  | C | <#00AA00>Kierowca <-- aktualizacja |
+  | D | <#00AA00>Zespół <-- aktualizacja |
+  | E | <#00AA00>Gap do lidera / DNF / DNS / DSQ <-- aktualizacja |
+  | F | <#00AA00>Opony (np. SHS) <-- aktualizacja |
+  | G | <#00AA00>Okrążenia na stintach (np. 13/42/10) <-- aktualizacja |
+  ]
+}
+
+component "OpenF1 API" as API {
+  component SESSIONS [
+  GET /v1/sessions
+  ====
+  api.openf1.org
+  ====
+  |Param| year={rok}&session_name=Race|
+  |Odpowiedź| session_key, country_name,|
+  |          | location, circuit_short_name|
+  ]
+  component RESULT [
+  GET /v1/session_result
+  ====
+  |Param| session_key={session_key}|
+  |Odpowiedź| position, driver_number,|
+  |          | gap_to_leader, dnf, dns, dsq|
+  ]
+  component DRIVERS [
+  GET /v1/drivers
+  ====
+  |Param| session_key={session_key}|
+  |Odpowiedź| driver_number, full_name,|
+  |          | team_name|
+  ]
+  component STINTS [
+  GET /v1/stints
+  ====
+  |Param| session_key={session_key}|
+  |Odpowiedź| driver_number, stint_number,|
+  |          | compound, lap_start, lap_end|
+  ]
+}
+
+' ukryte strzałki – tylko ustawiają endpointy w kolejności 3-6 od lewej
+SESSIONS -[hidden]r-> RESULT
+RESULT   -[hidden]r-> DRIVERS
+DRIVERS  -[hidden]r-> STINTS
+
+Robot -d-> GPDICT        : 1. \nWczytaj słownik\naliasów GP
+Robot -d-> RACES         : 2. \nWczytaj listę wyścigów
+Robot -u-> SESSIONS      : 3. \nZnajdź wyścig\n(rok + GP ze słownika)
+Robot -u-> RESULT        : 4. \nPobierz klasyfikację
+Robot -u-> DRIVERS       : 5. \nPobierz kierowców\ni zespoły
+Robot -u-> STINTS        : 6. \nPobierz strategie opon
+Robot -r-> ROUT          : 7a. \nPrzenieś z\ndatą wykonania
+Robot .r.> ROUT          : 7b. \nPrzenieś z\nbłędem jako\nERROR_RACES.xlsx
+
+legend bottom left
+  |= Kolor / Ikona |= Znaczenie |
+  |testcifs| Folder sieciowy dostępny przez RPA i użytkownika |
+  | →   | Wywołuje przepływ procesu |
+  | - ->| Przepływ warunkowy (w przypadku błędu)  |
+endlegend
+@enduml
