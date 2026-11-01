@@ -1,0 +1,78 @@
+pl:
+  err_incorrect_mode: "Niepoprawny tryb, poprawne tryby: PROD, TEST"
+  err_incorrect_type: "Niepoprawny typ, poprawne typy: WWW, API, FIL "
+  err_apikey: "Nie poprawny apikey"
+  step_0: "STEP 0 - Start - %n"
+  step_1: "STEP 1 - Zalogowano"
+  step_2: "STEP 2 - Przygotowano"
+  step_3: "STEP 3 - Przetworzono"
+  step_5: "STEP 5 - Zakończona - %n"
+  file_in_miss: "Brak pliku wejściowego z danymi lub wszystkie zostały przetworzone."
+  file_progress: "Postęp pliku  : %n"
+  file_error: "Brak pliku wejściowego, pobranie następnego pliku."
+  login_pass_miss: "Brak danych login lub  hasło w .envs"
+  login_error: "Nie poprawny login/hasło w .envs"
+  bad_file: "Plik z niepoprawnymi danymi"
+  folder_not_exist: Folder %n nie istnieje
+  date_format : "Niepoprawny format daty"
+  date_not_found: "Nie znaleziono daty w nazwie pliku: %n (plik będzie przetworzy jeden raz) "
+  err_xls_conversion: Konwersja pliku *.xls* przez LiberOffice nie powiodła się %n
+  batch_pdf_conversion_error: "Błąd konwersji PDF: %e"
+  unexpected_error: "Nieoczekiwany błąd: %e"
+  dryrun_enabled: "Tryb DRYRUN włączony"
+
+### errory do skryptu do zliczania logów
+  err_filenotfound: Nie znaleziono logów dla %n
+  err_data: Plik %n nie zawiera danych w formacie słownika.
+  err_decode: Błąd dekodowania JSON w pliku %n
+  err_format: Nieobsługiwany format danych w pliku %n
+  save: Dane zapisano w %n
+  delete: Plik %n został usunięty
+  use_script: Użycie w konsoli - python skrypt.py <rok> <miesiąc>
+
+### dolog
+  log_sheet_sum_name: "Razem"
+  log_sheet_month_sum: "Miesiąc/Razem"
+  log_header_total: "Razem"
+  log_header_hours_saved: "Godzin oszczędzonych"
+  log_header_md_saved: "MD oszczędzonych"
+  log_header_robot_work_time: "Czas pracy robota"
+  log_header_status_ok_percent: "% statusów OK"
+
+### API
+  api_connection_success: "Połączenie z API zakończone sukcesem"
+  api_connection_failed: "Błąd połączenia z API, kod statusu: "
+  err_api_request: "Błąd żądania API: "
+  api_connection_check: "Sprawdzenie podłączenia do API ..."
+  api_error: "Błąd API : %item_id status  %status_code"
+
+### FILE
+  file_name: "========== Przetwarzenie pliku: %file_name =========="
+  file_sheet: "---------- Przetwarzenie zakładki: %sheet_name ----------"
+  file_name_completed: "========== Plik:  %file_name zakończony: %desc =========="
+
+### F1
+  gp_dict_loaded: "Wczytano słownik GP: %n aliasów"
+  gp_dict_miss: "Brak słownika GP: %n"
+  site_check: "Sprawdzenie strony %n ..."
+  site_ok: "Strona dostępna: %n"
+  site_failed: "Strona niedostępna: %n"
+  season_page: "Kalendarz sezonu: %n"
+  race_progress: "Wyścig: %n"
+  race_ok: "OK"
+  err_gp_empty: "Brak roku lub nazwy GP w wierszu"
+  err_year: "Niepoprawny rok: %n"
+  err_year_range: "Brak danych dla roku %n (mistrzostwa F1 od %m)"
+  col_status: "status"
+  err_season: "Brak kalendarza sezonu na stronie: %n"
+  err_gp_not_found: "Nie znaleziono GP: %n"
+  err_gp_ambiguous: "Niejednoznaczna nazwa GP: %n (pasuje: %m), podaj tor"
+  err_no_results: "Brak wyników wyścigu na stronie: %n"
+  err_page: "Błąd odczytu strony: "
+  col_pos: "Poz"
+  col_no: "Nr"
+  col_driver: "Kierowca"
+  col_team: "Zespół"
+  col_gap: "Gap do lidera"
+  col_tyres: "Opony"
+  col_stints: "Okrążenia na stintach"

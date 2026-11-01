@@ -1,0 +1,66 @@
+@startuml Sequence Diagram of dolog.py
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+header 
+ Diagram sekwencji pracy dolog odpowiedzilanego za zbierania logów z plików json do pliku Excel
+endheader
+footer Author: kamil.mieczkowski@poczta-polska.pl
+
+title dolog.py version 1.2.0
+
+
+
+os-> dolog
+note right #Grey
+- Przekazanie parametrów YYYY MM
+end note
+
+dolog -> "./translations"
+note right #Grey
+Ustawienie tłumaczeń
+end note
+
+
+group#Gray Uruchomienie main()
+
+dolog --> dolog : zweryfikuj parametry year, month
+note right
+Ustawienie roku i miesiąca przetwarzania
+plików  .json z katalogu .\log
+end note
+
+dolog --> dolog : zweryfikuj parametry  log_folder, workbook_path
+note right
+    Ustawienie katalogu i nazwy pliku -logs.xlsx
+    end note
+
+
+    group#Gray process_logs() :Przetwarzanie plików .json z katalogu .log
+
+        dolog --> dolog : Pobranie pilków .json w katalogu ./log
+
+        group#Gray Przepisanie danych
+            dolog --> dolog : Zbuduj listę plików z YYYY-MM*.json
+            dolog -> "{robot}-logs.xlsx" : Utwórz/otwrórz  plik Excel
+            dolog -> "{robot}-logs.xlsx" : Utwórz/otwrórz  Zakładkę(**sheet**) o nazwie YYYY-MM
+            dolog -> "log_files[]" : Pobierz pierwszy plik
+            group#Gray Jeżeli potrzeba 
+                dolog -> "{robot}-logs.xlsx" : Uzupełnij nagłówki w Excelu kluczami z YYYY-MM*.josn
+            end
+            dolog --> dolog  : Określ start_row  w "{robot}-logs.xlsx"
+
+            loop po wszystkich plikach log_files[]
+                dolog -->dolog : Ustaw **log_path**
+                dolog -> "log_files[]" : Pobierz kolejny plik jako json do **data**
+                dolog -> "{robot}-logs.xlsx" : Przepisz z **data** do Zakładki(**sheeet**) do  wiersza **start_row**
+                dolog -->dolog : Zaktualizuj **start_row**
+                dolog -> "{robot}-logs.xlsx" : Zapisz dane w pliku Excel
+                dolog->"log_files[]": Usuń przetworzony plik .json określony w **log_path**
+            end
+
+        end
+
+    end
+end
+
+@enduml

@@ -1,0 +1,55 @@
+@startuml
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+skinparam linetype polyline
+skinparam componentStyle rectangle
+header
+Diagram komponentów osadzonych w infrastrukturze IT – Zadanie **F1T001**
+(Pobieranie wyników wyścigów F1 z WWW)
+endheader
+footer Author: kalinpi
+allowmixing
+
+node "Oracle Linux" as Linux {
+  component Robot [
+    F1T001@prep
+    <<WWW>>
+    ====
+    Opis: Pobieranie klasyfikacji wyścigów przez scraping Wikipedii
+    Szczegóły:
+    [[file://./1_task_prep_Component_Diagram.plantuml]]
+  ]
+}
+
+node "Zasób sieciowy (cifs)" as cifs {
+  folder dict_folder as "/dicts" {
+    file DICT <<GP_DICT.xlsx>>
+  }
+  folder in_folder as "/in" {
+    file RACES <<RACES.xlsx>>
+  }
+  folder out_folder as "/out" {
+    file RACES_out <<RACES_out.xlsx>>
+  }
+}
+
+node "Adres WWW (URL)" as WWW #FFCCCC {
+  component URL [
+    Wikipedia
+    ====
+    https://en.wikipedia.org
+  ]
+}
+
+Robot -d-> DICT      : 1. \nWczytaj słownik\nnazw GP
+Robot -d-> RACES     : 2. \nWczytaj listę\nwyścigów
+Robot -l-> URL       : 3. \nPobierz kalendarz\ni wyniki z WWW
+Robot -u-> RACES_out : 4. \nZapisz wynik\nlub powód błędu
+
+legend bottom left
+  |= Kolor / Ikona |= Znaczenie |
+  |<#FFCCCC>| Zewnętrzna infrastruktura |
+  |<#FFFFFF>| Wewnętrzna infrastruktura |
+  |cifs| Folder sieciowy dostępny dla RPA |
+endlegend
+@enduml

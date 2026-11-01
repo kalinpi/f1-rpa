@@ -1,0 +1,55 @@
+@startuml
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+skinparam linetype polyline
+skinparam componentStyle rectangle
+header
+Component diagram embedded in IT infrastructure – Task **F1T001**
+(Fetching F1 race results from WWW)
+endheader
+footer Author: kalinpi
+allowmixing
+
+node "Oracle Linux" as Linux {
+  component Robot [
+    F1T001@prep
+    <<WWW>>
+    ====
+    Description: Fetching race classification by scraping Wikipedia
+    Details:
+    [[file://./1_task_prep_Component_Diagram.plantuml]]
+  ]
+}
+
+node "Network resource (cifs)" as cifs {
+  folder dict_folder as "/dicts" {
+    file DICT <<GP_DICT.xlsx>>
+  }
+  folder in_folder as "/in" {
+    file RACES <<RACES.xlsx>>
+  }
+  folder out_folder as "/out" {
+    file RACES_out <<RACES_out.xlsx>>
+  }
+}
+
+node "WWW address (URL)" as WWW #FFCCCC {
+  component URL [
+    Wikipedia
+    ====
+    https://en.wikipedia.org
+  ]
+}
+
+Robot -d-> DICT      : 1. \nLoad GP name\ndictionary
+Robot -d-> RACES     : 2. \nLoad race list
+Robot -l-> URL       : 3. \nRead calendar\nand results from WWW
+Robot -u-> RACES_out : 4. \nSave result\nor error reason
+
+legend bottom left
+  |= Color / Icon |= Meaning |
+  |<#FFCCCC>| External infrastructure |
+  |<#FFFFFF>| Internal infrastructure |
+  |cifs| Network folder available to RPA |
+endlegend
+@enduml

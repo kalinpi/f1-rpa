@@ -1,0 +1,92 @@
+@startuml
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+header
+Component diagram describing the detailed scope of task F1T001
+(data transformation) – WWW mode
+endheader
+footer Author: kalinpi
+allowmixing
+skinparam linetype polyline
+
+component Robot [
+@task prep
+====
+
+====
+<<enum>> dict_GP
+<<enum>> dict_RACES
+]
+
+folder "testcifs/dicts" {
+  file GPDICT <<GP_DICT.xlsx>> [
+  | column: | dict_GP |
+  | A | alias (e.g. baku, monako, cota) |
+  | B | canonical name (e.g. Azerbaijan) |
+  ]
+}
+
+folder "testcifs/in" {
+  file RACES <<*RACES.xlsx>> [
+  | column: | dict_RACES |
+  | A | year |
+  | B | GP name / circuit / country |
+  ]
+}
+
+folder "testcifs/out" {
+  file ROUT <<*RACES_out.xlsx>> [
+  | Sheet 1\column: | RACES_out |
+  | A | year |
+  | B | GP name / circuit / country |
+  | C | <#00AA00>status: OK <-- update |
+  | C | <#00AA00>error_description (red) <-- if error |
+  ====
+  | Sheet "{year} {GP}"\column: | race result |
+  | A | <#00AA00>Pos <-- update |
+  | B | <#00AA00>No <-- update |
+  | C | <#00AA00>Driver <-- update |
+  | D | <#00AA00>Team <-- update |
+  | E | <#00AA00>Gap to leader / DNF / DNS / DSQ <-- update |
+  | F | Tyres (empty – not on the website) |
+  | G | Laps per stint (empty – not on the website) |
+  ]
+}
+
+component "Wikipedia" as WWW {
+  component SEASON [
+  Season page
+  ====
+  /wiki/{year}_Formula_One_World_Championship
+  ====
+  |Table| calendar (Round, Grand Prix, Circuit)|
+  |Data| GP name, country (flag), circuit, city|
+  ]
+  component RACE [
+  Race page
+  ====
+  /wiki/{year}_{GP name}
+  ====
+  |Table| #Race_classification|
+  |Data| Pos., No., Driver,|
+  |     | Constructor, Time/Retired|
+  ]
+}
+
+' hidden arrow – only keeps pages ordered 3-4 from the left
+SEASON -[hidden]r-> RACE
+
+Robot -d-> GPDICT        : 1. \nLoad GP\nalias dictionary
+Robot -d-> RACES         : 2. \nLoad list of races
+Robot -u-> SEASON        : 3. \nFind the race in the calendar\n(year + GP from dictionary)
+Robot -u-> RACE          : 4. \nRead classification
+Robot -r-> ROUT          : 5a. \nMove with\nexecution date
+Robot .r.> ROUT          : 5b. \nMove with\nerror as\nERROR_RACES.xlsx
+
+legend bottom left
+  |= Color / Icon |= Meaning |
+  |testcifs| Network folder available by RPA and user |
+  | →   | Invokes process flow |
+  | - ->| Conditional flow (in case of error)  |
+endlegend
+@enduml

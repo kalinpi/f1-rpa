@@ -1,0 +1,92 @@
+@startuml
+skinparam HeaderFontSize 20
+skinparam FooterFontSize 15
+header
+Diagram komponentów opisujący szczegółowy zakres zadania F1T001
+(przekształcanych danych) – tryb WWW
+endheader
+footer Author: kalinpi
+allowmixing
+skinparam linetype polyline
+
+component Robot [
+@task prep
+====
+
+====
+<<enum>> dict_GP
+<<enum>> dict_RACES
+]
+
+folder "testcifs/dicts" {
+  file GPDICT <<GP_DICT.xlsx>> [
+  | kolumna: | dict_GP |
+  | A | alias (np. baku, monako, cota) |
+  | B | nazwa kanoniczna (np. Azerbaijan) |
+  ]
+}
+
+folder "testcifs/in" {
+  file RACES <<*RACES.xlsx>> [
+  | kolumna: | dict_RACES |
+  | A | rok |
+  | B | nazwa GP / tor / kraj |
+  ]
+}
+
+folder "testcifs/out" {
+  file ROUT <<*RACES_out.xlsx>> [
+  | Zakładka 1\kolumna: | RACES_out |
+  | A | rok |
+  | B | nazwa GP / tor / kraj |
+  | C | <#00AA00>status: OK <-- aktualizacja |
+  | C | <#00AA00>opis_bledu (czerwony) <-- jeśli błąd |
+  ====
+  | Zakładka "{rok} {GP}"\kolumna: | wynik wyścigu |
+  | A | <#00AA00>Poz <-- aktualizacja |
+  | B | <#00AA00>Nr <-- aktualizacja |
+  | C | <#00AA00>Kierowca <-- aktualizacja |
+  | D | <#00AA00>Zespół <-- aktualizacja |
+  | E | <#00AA00>Gap do lidera / DNF / DNS / DSQ <-- aktualizacja |
+  | F | Opony (puste – brak na stronie) |
+  | G | Okrążenia na stintach (puste – brak na stronie) |
+  ]
+}
+
+component "Wikipedia" as WWW {
+  component SEASON [
+  Strona sezonu
+  ====
+  /wiki/{rok}_Formula_One_World_Championship
+  ====
+  |Tabela| kalendarz (Round, Grand Prix, Circuit)|
+  |Dane| nazwa GP, kraj (flaga), tor, miasto|
+  ]
+  component RACE [
+  Strona wyścigu
+  ====
+  /wiki/{rok}_{nazwa GP}
+  ====
+  |Tabela| #Race_classification|
+  |Dane| Pos., No., Driver,|
+  |     | Constructor, Time/Retired|
+  ]
+}
+
+' ukryta strzałka – tylko ustawia strony w kolejności 3-4 od lewej
+SEASON -[hidden]r-> RACE
+
+Robot -d-> GPDICT        : 1. \nWczytaj słownik\naliasów GP
+Robot -d-> RACES         : 2. \nWczytaj listę wyścigów
+Robot -u-> SEASON        : 3. \nZnajdź wyścig w kalendarzu\n(rok + GP ze słownika)
+Robot -u-> RACE          : 4. \nOdczytaj klasyfikację
+Robot -r-> ROUT          : 5a. \nPrzenieś z\ndatą wykonania
+Robot .r.> ROUT          : 5b. \nPrzenieś z\nbłędem jako\nERROR_RACES.xlsx
+
+legend bottom left
+  |= Kolor / Ikona |= Znaczenie |
+  |testcifs| Folder sieciowy dostępny przez RPA i użytkownika |
+  | →   | Wywołuje przepływ procesu |
+  | - ->| Przepływ warunkowy (w przypadku błędu)  |
+endlegend
+@enduml

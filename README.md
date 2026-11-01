@@ -11,7 +11,7 @@ The robot fetches the results and saves an Excel file with the classification, t
 
 | Robot | Type | Description | Status |
 |---|---|---|---|
-| [F1T001](www/f1t001/) | WWW | Race results scraped from a website (Playwright) | ⏳ planned |
+| [F1T001](www/f1t001/README.md) | WWW | Race results scraped from [Wikipedia](https://en.wikipedia.org) with Playwright (seasons since 1950, no tyre data) | ✅ ready (local tests) |
 | [F1T002](api/f1t002/README.md) | API | Race results and tyre strategies from [OpenF1 API](https://openf1.org) (2023+) | ✅ ready (local tests) |
 | [F1T003](file/f1t003/README.md) | FILE | Statistics computed offline from the F1T001 / F1T002 output (most common tyre strategy, pit stops, DNF count, best team…) | ✅ ready (local tests) |
 
@@ -33,7 +33,7 @@ Details and diagrams: [api/f1t002/docs/EN/README.md](api/f1t002/docs/EN/README.m
 ```
 f1-rpa/
 ├── api/f1t002/    ← API robot (OpenF1)
-├── www/f1t001/    ← WWW robot (scraping)
+├── www/f1t001/    ← WWW robot (Wikipedia scraping)
 └── file/f1t003/   ← FILE robot (statistics from Excel)
 ```
 
