@@ -15,19 +15,18 @@ Zapis `F1T003@prep` na diagramach oznacza: robot F1T003, zadanie `prep`.
 
 - Diagramy opisujące, jak komponenty komunikują się ze sobą (i w jakiej kolejności).
     - Uproszczony zakres F1T003 na infrastrukturze
-    ![0_tasks_Infrastructure](./0_tasks_Infrastructure.plantuml)
+    ![0_tasks_Infrastructure](./0_tasks_Infrastructure.png)
 
     - Zadanie prepare
 
         Liczenie statystyk (zwycięzca, DNF, pit stopy, strategie opon, najlepszy zespół) z zakładek z wynikami wyścigów – zakres realizowany w F1T003@prep
-        ![1_task_prep_Component_Diagram](./1_task_prep_Component_Diagram.plantuml)
+        ![1_task_prep_Component_Diagram](./1_task_prep_Component_Diagram.png)
 
     - [4_dolog_DiagramSekwencji](./4_dolog_SequenceDiagram.plantuml) główne sekwencje w dolog.py do zbierania statystyk do Excela.
 
-#### VS Code
-1. Zainstaluj rozszerzenie [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml) dla VS Code.
-2. Zainstaluj Javę i Graphviz zgodnie z opisem wtyczki.
-3. Otwórz plik `.plantuml` i wciśnij `Option+D` (macOS) / `Alt+D` (Windows), aby zobaczyć podgląd.
+#### Podgląd i edycja diagramów
+Obrazki `.png` powyżej są wygenerowane z plików `.plantuml`. Po zmianie diagramu trzeba wygenerować je ponownie: `java -jar plantuml.jar -tpng <plik>.plantuml`.
 
-#### WWW
-4. Ewentualnie wklej treść diagramu na stronie http://www.plantuml.com/plantuml/uml
+Podgląd plików `.plantuml`:
+- w edytorze: zainstaluj wtyczkę PlantUML (np. [VS Code](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml), [IntelliJ IDEA / PyCharm](https://plugins.jetbrains.com/plugin/7017-plantuml4idea)) oraz Javę i Graphviz zgodnie z opisem wtyczki,
+- bez instalacji: wklej treść diagramu na stronie https://www.plantuml.com/plantuml/uml.

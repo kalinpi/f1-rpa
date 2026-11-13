@@ -29,20 +29,20 @@
     + ✅ Sekwencji (dolog, kopia z WTH001)
     + ✅ Opisy funkcji w kodzie
 
-9. 🔄 Fixy z/do szablonu v2
+9. ❌ Fixy z/do szablonu v2
     + ✅ Pobranie poprawek do Dolog (identyczny z v2)
-    + ⏳ Zgłoszenie poprawek do v2 (nazwa logu `.json` z dokładnością do sekundy – szybki przebieg nadpisuje zamknięty log; niedostępny URL w `ut.open_the_intranet_website` kończy task tracebackiem bez zapisu błędu do logu `.json`)
+    + ❌ Zgłoszenie poprawek do v2 (nazwa logu `.json` z dokładnością do sekundy – szybki przebieg nadpisuje zamknięty log; niedostępny URL w `ut.open_the_intranet_website` kończy task tracebackiem bez zapisu błędu do logu `.json`)
 
 10. ✅ Policzenie pracy
     + ✅ Zapis przebiegu do `.json`
     + ✅ Formuły Excel w statystykach Dolog
 
-11. 🔄 Weryfikacja pliku `F1T001.sh` oraz proxy
+11. ❌ Weryfikacja pliku `F1T001.sh` oraz proxy
     + ✅ Składnia `bash -n`
-    + ⏳ Uruchomienie przez `rcc` i proxy na serwerze
+    + ❌ Uruchomienie przez `rcc` i proxy na serwerze
 
 12. ✅ Dokumentacja
     + ✅ `docs/README.md` (PL/EN)
     + ✅ `README.md` / `README_pl.md` robota
 
-13. ⏳ Pilot - weryfikacja i strojenie na środowisku docelowym (powtórzenie pkt. 1-12)
+13. ❌ Pilot - weryfikacja i strojenie na środowisku docelowym (powtórzenie pkt. 1-12)

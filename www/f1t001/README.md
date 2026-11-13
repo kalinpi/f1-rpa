@@ -1,29 +1,30 @@
 # F1T001
 
-## 📋 General Information
-| | |
+## General information
+
+| Item | Value |
 |---|---|
-| **Business Owner** | xxxxx@xxx.pl |
-| **RPA Service** | ServiceDesk → Request/Incident → Category → RPA |
-| **Robot account (system)** | `xxx_F1T` |
-| **AD account (network/resources)** | `xxx_F1T_ad` |
+| **Business owner** | |
+| **RPA service** | ServiceDesk → Request/Incident → Category → RPA |
+| **Robot account (system)** | |
+| **AD account (network/resources)** | |
 
 ## Description
 
-The robot retrieves Formula 1 race results from a [website](https://en.wikipedia.org) (Wikipedia, data from the 1950 season) and consists of tasks:
+The robot retrieves Formula 1 race results from [Wikipedia](https://en.wikipedia.org) (scraping, data from the 1950 season).
 
-⚡ prep - checks whether there is data in `SHARED\in\` in a file named `*RACES*.xlsx` (A = year, B = GP name, circuit or country in any form), translates the GP name using `SHARED\dicts\GP_DICT.xlsx`, finds the race in the season calendar and reads the classification from the race page (scraping). For every race it adds a sheet (e.g. `2025 Azerbaijan`), writes the status of each row in column C and moves the file to `SHARED\out\`.
+Task `prep`:
 
-> ℹ️ **WWW mode (scraping).** The robot opens the season page in a browser
-> (`/wiki/{year}_Formula_One_World_Championship`), matches the GP in the calendar table by country (flag),
-> GP name, circuit or city, then reads the `Race_classification` table from the race page.
-> Wikipedia does not publish tyre strategies, so the Tyres and Laps per stint columns are empty
-> (full data for seasons from 2023 is provided by robot F1T002).
-> The robot waits 5 s between page loads (`Crawl-delay` from Wikipedia `robots.txt`).
+1. Looks for `*RACES*.xlsx` files in `SHARED/in/` (column A – year, column B – GP name, circuit or country in any form, e.g. `baku`, `monako`, `cota`).
+2. Translates the GP name using the dictionary `SHARED/dicts/GP_DICT.xlsx` and finds the race in the season calendar (`/wiki/{year}_Formula_One_World_Championship`) by country, GP name, circuit or city.
+3. Reads the `Race_classification` table from the race page and adds a separate sheet for every race (e.g. `2025 Azerbaijan`).
+4. Writes the status of each row in column C and moves the file to `SHARED/out/`.
 
-[📖 Detailed task description](docs/EN/README.md)
+Wikipedia does not publish tyre strategies, so the Tyres and Laps per stint columns are empty (full data for seasons from 2023 is provided by robot F1T002). The robot waits 5 s between page loads (`Crawl-delay` from Wikipedia `robots.txt`).
 
-## ▶️ Run
+Details and diagrams: [docs/EN/README.md](docs/EN/README.md)
+
+## Run
 
 ```
 ./F1T001.sh prep
@@ -31,33 +32,34 @@ The robot retrieves Formula 1 race results from a [website](https://en.wikipedia
 
 ## Results
 
-🚀 After running the robot, check the processed files in `SHARED/out/`
+#### `SHARED/out/` – processed files
 
-#### A→ In the `SHARED/out` subfolder
+- column C: `OK` (gray background) or an error description (red background), e.g. GP not found, ambiguous GP name, no results (race not held yet)
+- one sheet per race: Pos | No | Driver | Team | Gap to leader / DNF / DNS / DSQ | Tyres (empty) | Laps per stint (empty)
+- file name with the date and time of processing, or with the `ERROR_` prefix if anything failed
 
-- `*RACES*.xlsx` files already processed by the robot
-- column C contains `OK` (gray) or an error description (red), e.g. GP not found, ambiguous GP name, no results (race not held yet)
-- a sheet for every race: Pos | No | Driver | Team | Gap to leader / DNF / DNS / DSQ | Tyres (empty) | Laps per stint (empty)
-- files have the processing date and time added to their name
-- files with errors get the `ERROR_` prefix
+#### `SHARED/log/prep/` – robot run
 
-#### B→ In the `SHARED/log` subfolder
+- `log.html` – the robot's actions step by step and any errors
+- `stdout_<date>.log` – console messages
 
-- `log.html` file with the robot's step-by-step actions and possible errors
-- `stdout.log` file with console messages from the robot run
+#### `./log/` – statistics (local)
 
-#### C→ In the local `./log` subfolder
-- `f1t001-logs.xlsx` file with sheets of statistics collected from `.json` files
+- `f1t001-logs.xlsx` – robot work statistics collected from `.json` files by the `Dolog` task
 
-## ⚙️ Configuration (.env)
-- *MODE* → working mode (`PROD` / `TEST`)
-- *TYPE* → robot connection type `WWW`
-- *SHARED* → path to the shared resource (empty = local work)
-- *SDIR* → local folder with test data (`./testcifs`)
-- *URL_PROD*, *URL_TEST* → website address (Wikipedia)
-- *LANGUAGE* → language of robot messages (`pl` / `en`)
-- *WAIT_TO_RESPONSE* → browser action delay (ms), page timeout = 50 × value (minimum 20 s)
-- *DRYRUN* → test mode without reading results from the website (`0` / `1`)
-- *RED*, *GREEN*, *GRAY*, *WHITE* → cell colors (ARGB)
-- *SECURED* → decrypt `.envs` variables with Fernet (`0` / `1`)
-- In WWW mode, no login and password are needed in the `.envs` file
+## Configuration (.env)
+
+| Variable | Description |
+|---|---|
+| `MODE` | operation mode (`PROD` / `TEST`) |
+| `TYPE` | robot type (`WWW`) |
+| `SHARED` | path to the shared resource (empty = local operation) |
+| `SDIR` | local folder with test data (`./testcifs`) |
+| `URL_PROD`, `URL_TEST` | website address (Wikipedia) |
+| `LANGUAGE` | message language (`pl` / `en`) |
+| `WAIT_TO_RESPONSE` | browser action delay in ms; page timeout = 50 × value (minimum 20 s) |
+| `DRYRUN` | test mode without reading results from the website (`0` / `1`) |
+| `RED`, `GREEN`, `GRAY`, `WHITE` | cell colors (ARGB) |
+| `SECURED` | decrypt `.envs` variables (`0` / `1`) |
+
+The robot does not log in to the website, so no login and password are needed in `.envs`.

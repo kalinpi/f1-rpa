@@ -1,54 +1,60 @@
 # F1T003
 
-## 📋 General Information (Informacje ogólne)
-| | |
+## Informacje ogólne
+
+| Informacja | Wartość |
 |---|---|
-| **Opiekun biznesowy** | xxxxx@poczta-polska.pl |
+| **Opiekun biznesowy** | |
 | **Serwis RPA** | ServiceDesk → Żądanie/Incydent → Kategoria → RPA |
-| **Konto robota (system)** | `xxx_F1T` |
-| **Konto AD (sieć/zasoby)** | `xxx_F1T_ad` |
+| **Konto robota (system)** | |
+| **Konto AD (sieć/zasoby)** | |
 
-## Description (Opis)
+## Opis
 
-Robot liczy statystyki wyścigów Formuły 1 z pliku wynikowego F1T001 / F1T002 (bez połączenia z internetem) i składa się z zadań (tasków):
+Robot liczy statystyki wyścigów Formuły 1 z pliku wynikowego robota F1T001 lub F1T002 (bez połączenia z internetem).
 
-⚡prep - sprawdza czy w `SHARED\in\` są dane w pliku *RACES*.xlsx (zakładka na każdy wyścig: Poz | Nr | Kierowca | Zespół | Gap | Opony | Okrążenia na stintach), liczy statystyki każdego wyścigu i podsumowanie, dopisuje zakładkę `Statystyki` i przenosi plik do `SHARED\out\`.
+Zadanie `prep`:
 
-[📖 Szczegółowy opis tasków](docs/PL/README.md)
+1. Szuka w `SHARED/in/` plików `*RACES*.xlsx` z zakładką na każdy wyścig (Poz | Nr | Kierowca | Zespół | Gap | Opony | Okrążenia na stintach).
+2. Liczy statystyki każdego wyścigu oraz podsumowanie wszystkich wyścigów.
+3. Dopisuje zakładkę `Statystyki` i przenosi plik do `SHARED/out/`.
 
-## ▶️ Run (Uruchomienie)
+Szczegóły i diagramy: [docs/PL/README.md](docs/PL/README.md)
+
+## Uruchomienie
+
 ```
 ./F1T003.sh prep
 ```
 
-## Results (Wyniki)
+## Wyniki
 
-🚀 Po uruchomieniu robota, sprawdź przetworzone pliki w `SHARED/out/`
+#### `SHARED/out/` – przetworzone pliki
 
-#### A→ W podkatalogu `SHARED/out`
-
-- pliki `*RACES*.xlsx`, które robot już przetworzył
 - zakładka `Statystyki`: wiersz na każdy wyścig (zwycięzca, zespół zwycięzcy, sklasyfikowani, DNF/DNS/DSQ, średnia liczba pit stopów, najczęstsza strategia opon, status)
 - pod tabelą podsumowanie: liczba wyścigów, najczęstsza strategia, średnia pit stopów, suma DNF, najlepszy zespół (punkty 25-18-15-12-10-8-6-4-2-1), najwięcej zwycięstw
-- pliki mają dopisaną datę i godzinę przetworzenia
-- pliki z błędami (np. zakładka w złym formacie) otrzymują przedrostek `ERROR_`
+- nazwa pliku z datą i godziną przetworzenia, a przy błędzie (np. zakładka w złym formacie) z przedrostkiem `ERROR_`
 
-#### B→ W podkatalogu `SHARED/log`
+#### `SHARED/log/prep/` – przebieg pracy robota
 
-- w pliku `log.html` działania robota krok po kroku oraz ewentualne błędy
-- w pliku `stdout.log` komunikaty z konsoli z działania robota
+- `log.html` – działania robota krok po kroku i ewentualne błędy
+- `stdout_<data>.log` – komunikaty z konsoli
 
-#### C→ W podkatalogu lokalnym `./log`
-- w pliku `f1t003-logs.xlsx`, arkusze ze statystykami zebranymi z plików `.json`
+#### `./log/` – statystyki (lokalnie)
 
-## ⚙️ Configuration (.env) (Konfiguracja)
-- *MODE* → tryb pracy (`PROD` / `TEST`)
-- *TYPE* → tryb podłączenia robota `FIL`
-- *SHARED* → ścieżka do zasobu współdzielonego (puste = praca lokalna)
-- *SDIR* → lokalny folder z danymi testowymi (`./testcifs`)
-- *URL_PROD*, *URL_TEST* → nieużywane (tryb FILE)
-- *LANGUAGE* → język komunikatów robota (`pl` / `en`)
-- *WAIT_TO_RESPONSE* → nieużywane (tryb FILE)
-- *DRYRUN* → tryb testowy, same statusy bez statystyk (`0` / `1`)
-- *RED*, *GREEN*, *GRAY*, *WHITE* → kolory komórek (ARGB)
-- *SECURED* → odszyfrowanie zmiennych `.envs` Fernetem (`0` / `1`)
+- `f1t003-logs.xlsx` – statystyki pracy robota zebrane z plików `.json` przez zadanie `Dolog`
+
+## Konfiguracja (.env)
+
+| Zmienna | Opis |
+|---|---|
+| `MODE` | tryb pracy (`PROD` / `TEST`) |
+| `TYPE` | typ robota (`FIL`) |
+| `SHARED` | ścieżka do zasobu współdzielonego (puste = praca lokalna) |
+| `SDIR` | lokalny folder z danymi testowymi (`./testcifs`) |
+| `URL_PROD`, `URL_TEST` | nieużywane (robot FILE) |
+| `LANGUAGE` | język komunikatów (`pl` / `en`) |
+| `WAIT_TO_RESPONSE` | nieużywane (robot FILE) |
+| `DRYRUN` | tryb testowy – same statusy, bez statystyk (`0` / `1`) |
+| `RED`, `GREEN`, `GRAY`, `WHITE` | kolory komórek (ARGB) |
+| `SECURED` | odszyfrowanie zmiennych z `.envs` (`0` / `1`) |

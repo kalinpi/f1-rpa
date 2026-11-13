@@ -26,7 +26,13 @@ Naming: `F1T` = topic (F1) + robot number. `001` WWW, `002` API, `003` FILE – 
 5. The file is moved to `out/` with the execution date, or with the `ERROR_` prefix if anything failed.
 6. Every run leaves a `.json` log; task `Dolog` collects them into an Excel sheet with work statistics (1 processed row = 1 minute saved).
 
-Details and diagrams: [api/f1t002/docs/EN/README.md](api/f1t002/docs/EN/README.md) ([PL](api/f1t002/docs/PL/README.md)).
+The steps above describe F1T002. F1T001 works the same way but leaves the tyre columns empty, while F1T003 uses no dictionary or internet access: it takes the F1T001 / F1T002 output and adds a single statistics sheet to it.
+
+Details and diagrams:
+
+- F1T001: [www/f1t001/docs/EN/README.md](www/f1t001/docs/EN/README.md) ([PL](www/f1t001/docs/PL/README.md))
+- F1T002: [api/f1t002/docs/EN/README.md](api/f1t002/docs/EN/README.md) ([PL](api/f1t002/docs/PL/README.md))
+- F1T003: [file/f1t003/docs/EN/README.md](file/f1t003/docs/EN/README.md) ([PL](file/f1t003/docs/PL/README.md))
 
 ## Repository structure
 
@@ -43,4 +49,4 @@ and `docs/` (PlantUML diagrams, PL and EN).
 
 ## Author
 
-Piotr Kalinowski ([@kalinpi](https://github.com/kalinpi)) – preparation for an internship at Poczta Polska (RPA department).
+Piotr Kalinowski ([@kalinpi](https://github.com/kalinpi)) – RPA project built according to the Poczta Polska RPA standard.

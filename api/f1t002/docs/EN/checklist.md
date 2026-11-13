@@ -29,20 +29,20 @@
     + ✅ Sequence (dolog, copied from WTH001)
     + ✅ Function descriptions in code
 
-9. 🔄 Fixes from/to the v2 template
+9. ❌ Fixes from/to the v2 template
     + ✅ Fixes pulled into Dolog (identical to v2)
-    + ⏳ Fixes reported to v2 (WAIT_TO_RESPONSE in ms passed to requests as seconds; `.json` log name with one-second precision – a fast run overwrites the closed log)
+    + ❌ Fixes reported to v2 (WAIT_TO_RESPONSE in ms passed to requests as seconds; `.json` log name with one-second precision – a fast run overwrites the closed log)
 
 10. ✅ Work calculation
     + ✅ Run saved to `.json`
     + ✅ Excel formulas in Dolog statistics
 
-11. 🔄 Verification of the `F1T002.sh` file and proxy
+11. ❌ Verification of the `F1T002.sh` file and proxy
     + ✅ `bash -n` syntax
-    + ⏳ Run via `rcc` and proxy on the server
+    + ❌ Run via `rcc` and proxy on the server
 
 12. ✅ Documentation
     + ✅ `docs/README.md` (PL/EN)
     + ✅ Robot `README.md` / `README_pl.md`
 
-13. ⏳ Pilot - verification and tuning on the target environment (repeat items 1-12)
+13. ❌ Pilot - verification and tuning on the target environment (repeat items 1-12)

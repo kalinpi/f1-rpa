@@ -1,54 +1,61 @@
 # F1T002
 
-## 📋 General Information (Informacje ogólne)
-| | |
+## Informacje ogólne
+
+| Informacja | Wartość |
 |---|---|
-| **Opiekun biznesowy** | xxxxx@poczta-polska.pl |
+| **Opiekun biznesowy** | |
 | **Serwis RPA** | ServiceDesk → Żądanie/Incydent → Kategoria → RPA |
-| **Konto robota (system)** | `xxx_F1T` |
-| **Konto AD (sieć/zasoby)** | `xxx_F1T_ad` |
+| **Konto robota (system)** | |
+| **Konto AD (sieć/zasoby)** | |
 
-## Description (Opis)
+## Opis
 
-Robot pobiera wyniki wyścigów Formuły 1 z [REST API OpenF1](https://api.openf1.org/v1) (bez klucza API, dane od sezonu 2023) i składa się z zadań (tasków):
+Robot pobiera wyniki wyścigów Formuły 1 z [OpenF1 API](https://openf1.org) (bez klucza API, dane od sezonu 2023).
 
-⚡prep - sprawdza czy w `SHARED\in\` są dane w pliku *RACES*.xlsx (A = rok, B = nazwa GP, toru lub kraju w dowolnej formie), tłumaczy nazwę GP słownikiem `SHARED\dicts\GP_DICT.xlsx`, wyszukuje wyścig i pobiera klasyfikację, kierowców oraz strategie opon. Dla każdego wyścigu dodaje zakładkę (np. `2025 Baku`), w kolumnie C zapisuje status wiersza i przenosi plik do `SHARED\out\`.
+Zadanie `prep`:
 
-[📖 Szczegółowy opis tasków](docs/PL/README.md)
+1. Szuka w `SHARED/in/` plików `*RACES*.xlsx` (kolumna A – rok, kolumna B – nazwa GP, toru lub kraju w dowolnej formie, np. `baku`, `Monaco`, `cota`).
+2. Tłumaczy nazwę GP słownikiem `SHARED/dicts/GP_DICT.xlsx` i wyszukuje wyścig.
+3. Pobiera klasyfikację, kierowców i strategie opon, a dla każdego wyścigu dodaje osobną zakładkę (np. `2025 Baku`).
+4. W kolumnie C zapisuje status wiersza i przenosi plik do `SHARED/out/`.
 
-## ▶️ Run (Uruchomienie)
+Szczegóły i diagramy: [docs/PL/README.md](docs/PL/README.md)
+
+## Uruchomienie
+
 ```
 ./F1T002.sh prep
 ```
 
-## Results (Wyniki)
+## Wyniki
 
-🚀 Po uruchomieniu robota, sprawdź przetworzone pliki w `SHARED/out/`
+#### `SHARED/out/` – przetworzone pliki
 
-#### A→ W podkatalogu `SHARED/out`
-
-- pliki `*RACES*.xlsx`, które robot już przetworzył
-- w kolumnie C `OK` (szary) albo opis błędu (czerwony), np. nie znaleziono GP, niejednoznaczna nazwa GP, GP odwołane
+- kolumna C: `OK` (szare tło) albo opis błędu (czerwone tło), np. nie znaleziono GP, niejednoznaczna nazwa GP, GP odwołane
 - zakładka dla każdego wyścigu: Poz | Nr | Kierowca | Zespół | Gap do lidera / DNF | Opony (np. `HM`) | Okrążenia na stintach (np. `40/11`)
-- pliki mają dopisaną datę i godzinę przetworzenia
-- pliki z błędami otrzymują przedrostek `ERROR_`
+- nazwa pliku z datą i godziną przetworzenia, a przy błędzie z przedrostkiem `ERROR_`
 
-#### B→ W podkatalogu `SHARED/log`
+#### `SHARED/log/prep/` – przebieg pracy robota
 
-- w pliku `log.html` działania robota krok po kroku oraz ewentualne błędy
-- w pliku `stdout.log` komunikaty z konsoli z działania robota
+- `log.html` – działania robota krok po kroku i ewentualne błędy
+- `stdout_<data>.log` – komunikaty z konsoli
 
-#### C→ W podkatalogu lokalnym `./log`
-- w pliku `f1t002-logs.xlsx`, arkusze ze statystykami zebranymi z plików `.json`
+#### `./log/` – statystyki (lokalnie)
 
-## ⚙️ Configuration (.env) (Konfiguracja)
-- *MODE* → tryb pracy (`PROD` / `TEST`)
-- *TYPE* → tryb podłączenia robota `API`
-- *SHARED* → ścieżka do zasobu współdzielonego (puste = praca lokalna)
-- *SDIR* → lokalny folder z danymi testowymi (`./testcifs`)
-- *URL_PROD*, *URL_TEST* → adres API OpenF1
-- *LANGUAGE* → język komunikatów robota (`pl` / `en`)
-- *WAIT_TO_RESPONSE* → timeout żądania (ms, stosowane minimum 5 s)
-- *DRYRUN* → tryb testowy bez zapytań do API (`0` / `1`)
-- *RED*, *GREEN*, *GRAY*, *WHITE* → kolory komórek (ARGB)
-- *SECURED* → odszyfrowanie zmiennych `.envs` Fernetem (`0` / `1`)
+- `f1t002-logs.xlsx` – statystyki pracy robota zebrane z plików `.json` przez zadanie `Dolog`
+
+## Konfiguracja (.env)
+
+| Zmienna | Opis |
+|---|---|
+| `MODE` | tryb pracy (`PROD` / `TEST`) |
+| `TYPE` | typ robota (`API`) |
+| `SHARED` | ścieżka do zasobu współdzielonego (puste = praca lokalna) |
+| `SDIR` | lokalny folder z danymi testowymi (`./testcifs`) |
+| `URL_PROD`, `URL_TEST` | adres OpenF1 API |
+| `LANGUAGE` | język komunikatów (`pl` / `en`) |
+| `WAIT_TO_RESPONSE` | timeout zapytania w ms (stosowane minimum 5 s) |
+| `DRYRUN` | tryb testowy bez zapytań do API (`0` / `1`) |
+| `RED`, `GREEN`, `GRAY`, `WHITE` | kolory komórek (ARGB) |
+| `SECURED` | odszyfrowanie zmiennych z `.envs` (`0` / `1`) |
