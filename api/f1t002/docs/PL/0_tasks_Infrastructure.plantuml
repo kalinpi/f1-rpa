@@ -29,7 +29,7 @@ node "Zasób sieciowy (cifs)" as cifs {
     file RACES <<RACES.xlsx>>
   }
   folder out_folder as "/out" {
-    file RACES_out <<RACES_out.xlsx>>
+    file ROUT <<RACES.xlsx>>
   }
 }
 
@@ -44,7 +44,7 @@ node "Zewnętrzne API (URL)" as API_NODE #FFCCCC {
 Robot -d-> DICT      : 1. \nWczytaj słownik\nnazw GP
 Robot -d-> RACES     : 2. \nWczytaj listę\nwyścigów
 Robot -l-> API       : 3. \nPobierz wyniki\ni strategie opon
-Robot -u-> RACES_out : 4. \nZapisz wynik\nlub powód błędu
+Robot -u-> ROUT      : 4. \nZapisz wynik\nlub powód błędu
 
 legend bottom left
   |= Kolor / Ikona |= Znaczenie |

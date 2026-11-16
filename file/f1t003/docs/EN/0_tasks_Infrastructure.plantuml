@@ -26,7 +26,7 @@ node "Network resource (cifs)" as cifs {
     file RIN <<RACES.xlsx>>
     }
   folder out_folder as "/out" {
-    file ROUT <<RACES_out.xlsx>>
+    file ROUT <<RACES.xlsx>>
     }
 }
 

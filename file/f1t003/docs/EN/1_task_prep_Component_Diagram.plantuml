@@ -32,7 +32,7 @@ folder "testcifs/in" {
 
 folder "testcifs/out" {
   file ROUT <<*RACES*.xlsx>> [
-  | Sheet "Statistics"\column: | RACES_out |
+  | Sheet "Statistics"\column: | statistics |
   | A | <#00AA00>Race <-- computed |
   | B | <#00AA00>Winner <-- computed |
   | C | <#00AA00>Winner team <-- computed |

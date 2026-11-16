@@ -6,7 +6,7 @@ The robot consists of two tasks run independently (`F1T002.sh <task>`):
 
 | Task | Description |
 |---|---|
-| `prep` | Main robot task: reads `RACES.xlsx` from the `in/` folder, fetches data from OpenF1 API and saves the result `RACES_out.xlsx` to the `out/` folder. |
+| `prep` | Main robot task: reads `*RACES*.xlsx` from the `in/` folder, fetches data from OpenF1 API, writes the status to column C and adds one sheet per race, then moves the file to `out/` (with the date or the `ERROR_` prefix). |
 | `Dolog` | Collects `.json` logs from consecutive runs into an Excel file with robot work statistics. |
 
 The notation `F1T002@prep` on the diagrams means: robot F1T002, task `prep`.

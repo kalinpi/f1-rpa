@@ -32,7 +32,7 @@ folder "testcifs/in" {
 
 folder "testcifs/out" {
   file ROUT <<*RACES*.xlsx>> [
-  | Zakładka "Statystyki"\kolumna: | RACES_out |
+  | Zakładka "Statystyki"\kolumna: | statystyki |
   | A | <#00AA00>Wyścig <-- wyliczono |
   | B | <#00AA00>Zwycięzca <-- wyliczono |
   | C | <#00AA00>Zespół zwycięzcy <-- wyliczono |

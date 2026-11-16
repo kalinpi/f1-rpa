@@ -35,8 +35,8 @@ folder "testcifs/in" {
 }
 
 folder "testcifs/out" {
-  file ROUT <<*RACES_out.xlsx>> [
-  | Zakładka 1\kolumna: | RACES_out |
+  file ROUT <<*RACES.xlsx>> [
+  | Zakładka 1\kolumna: | RACES |
   | A | rok |
   | B | nazwa GP / tor / kraj |
   | C | <#00AA00>status: OK <-- aktualizacja |

@@ -6,7 +6,7 @@ Robot składa się z dwóch zadań uruchamianych niezależnie (`F1T001.sh <zadan
 
 | Zadanie | Opis |
 |---|---|
-| `prep` | Główne zadanie robota: wczytuje `RACES.xlsx` z katalogu `in/`, odczytuje kalendarz i wyniki ze strony WWW (Wikipedia) i zapisuje wynik `RACES_out.xlsx` do katalogu `out/`. |
+| `prep` | Główne zadanie robota: wczytuje `*RACES*.xlsx` z katalogu `in/`, pobiera dane ze strony WWW (Wikipedia), dopisuje status w kolumnie C i zakładkę dla każdego wyścigu, po czym przenosi plik do `out/` (z datą lub prefiksem `ERROR_`). |
 | `Dolog` | Zbiera logi `.json` z kolejnych uruchomień do pliku Excel ze statystykami pracy robota. |
 
 Zapis `F1T001@prep` na diagramach oznacza: robot F1T001, zadanie `prep`.

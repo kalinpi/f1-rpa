@@ -1,49 +1,35 @@
-# ============================================================
-# Pliki lokalne – NIE trafiają do repo (ani na GitLab Poczty)
-# ============================================================
-
-# Kontekst/ustawienia AI (lokalne notatki dla Claude Code)
 CLAUDE.md
 CLAUDE.local.md
 .claude/
 .agents/
 
-# Sekrety
 .envs
 *.token
 
-# Środowiska wirtualne Python
 .venv/
 venv/
 __pycache__/
 *.pyc
 
-# Robocorp
 output/
 .rcc/
 
-# Logi robotów (zostaje tylko empty.txt trzymający folder)
 **/log/*
 !**/log/empty.txt
 
-# Wyniki testowe robotów
 **/testcifs/out/*
 !**/testcifs/out/empty.txt
 
-# Pliki tymczasowe (w tym blokady otwartego Excela ~$plik.xlsx)
 *.tmp
 *.temp
 ~$*
 *.lock
 
-# IDE
 .vscode/
 .idea/
 *.swp
 
-# PlantUML – eksport obrazków (domyślnie do /out w głównym folderze)
 /out/
 
-# System
 .DS_Store
 Thumbs.db

@@ -29,7 +29,7 @@ node "Zasób sieciowy (cifs)" as cifs {
     file RACES <<RACES.xlsx>>
   }
   folder out_folder as "/out" {
-    file RACES_out <<RACES_out.xlsx>>
+    file ROUT <<RACES.xlsx>>
   }
 }
 
@@ -44,7 +44,7 @@ node "Adres WWW (URL)" as WWW #FFCCCC {
 Robot -d-> DICT      : 1. \nWczytaj słownik\nnazw GP
 Robot -d-> RACES     : 2. \nWczytaj listę\nwyścigów
 Robot -l-> URL       : 3. \nPobierz kalendarz\ni wyniki z WWW
-Robot -u-> RACES_out : 4. \nZapisz wynik\nlub powód błędu
+Robot -u-> ROUT      : 4. \nZapisz wynik\nlub powód błędu
 
 legend bottom left
   |= Kolor / Ikona |= Znaczenie |
